@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
+const ANTHROPIC_API = "/api/anthropic";
 
 // ─── Storage ──────────────────────────────────────────────
 async function loadStudents() {
