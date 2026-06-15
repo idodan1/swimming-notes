@@ -74,7 +74,12 @@ async function extractStudentsFromImage(base64, apiKey, knownNames) {
   });
   const data = await res.json();
   const text = data.content?.[0]?.text || "{}";
-  try { return JSON.parse(text.replace(/```json|```/g, "").trim()).students || []; } catch { return []; }
+  try {
+    // Try to find JSON block anywhere in the response
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return [];
+    return JSON.parse(jsonMatch[0]).students || [];
+  } catch { return []; }
 }
 
 function toBase64(file) {
