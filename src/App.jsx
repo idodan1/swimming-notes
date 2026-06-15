@@ -213,6 +213,19 @@ const css = `
   .divider { height: 1px; background: #1a1a2e; margin: 14px 0; }
 `;
 
+// Stable textarea component — avoids focus loss on re-render
+function NoteInput({ value, onChange }) {
+  return (
+    <textarea
+      rows={4}
+      placeholder="מה קרה בשיעור?"
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      autoFocus
+    />
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState("shift");
   const [students, setStudents] = useState({});
@@ -459,7 +472,7 @@ export default function App() {
               </>
             )}
 
-            <textarea rows={4} placeholder="מה קרה בשיעור?" value={noteText} onChange={e => setNoteText(e.target.value)} />
+            <NoteInput value={noteText} onChange={setNoteText} />
             <div className="btn-row">
               <button className="save-btn" onClick={saveNote} disabled={!noteText.trim()}>שמור ➜</button>
               <button className="cancel-lesson-btn" onClick={() => markCancelled(selectedIdx)}>ביטול</button>
